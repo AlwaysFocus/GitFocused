@@ -1,0 +1,87 @@
+@page "/projects"
+@inject HttpClient Http
+
+<h1 class="text-primary">Projects</h1>
+
+<label for="basic-url">Search User Projects</label>
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon3">Username</span>    
+    </div>
+    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" @bind="User">
+    <span> 
+        <button class="btn btn-primary" @onclick="OnUserSelect">
+            Search
+        </button>
+    </span>
+</div>
+@if (Repos == null)
+{
+    <p>Search for a user to display their projects.</p>
+}
+else 
+    {
+    <div class="container">
+        <div class="row">
+            @foreach (var repo in Repos)
+            {
+                <div class="col-4">
+                    <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+                    <div class="card-header">@repo.name</div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="@repo.html_url">View This Project</a></h5>
+                            <p class="card-text">@repo.description</p>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+} 
+
+
+@code
+{
+    private FocusProject[] FocusProjects;
+    public Repo[] Repos;
+
+    public string User = "";
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    //FocusProjects = await Http.GetFromJsonAsync<FocusProject[]>("sample-data/projects.json");
+    //    //Repos = await Http.GetFromJsonAsync<Repo[]>($"https://api.github.com/users/{User}/repos");
+    //    
+    //}
+
+    public async void OnUserSelect()
+    {
+        Console.WriteLine($"The username is {User}");
+        Repos = await Http.GetFromJsonAsync<Repo[]>($"https://api.github.com/users/{User}/repos");
+        User = "";
+        StateHasChanged();
+    }
+
+    private void createRows()
+    {
+        // count the number of items in FocusProjects
+        
+    }
+    
+    private class FocusProject 
+    {
+        
+        public string name {get; set;}
+
+        public int number {get; set;}
+        public bool isDone {get; set;}
+    }
+
+    public class Repo 
+    {
+        public string name {get; set;}
+        public string html_url {get; set;}
+        public string description {get;set;}
+    }
+}
