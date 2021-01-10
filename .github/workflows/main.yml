@@ -27,7 +27,7 @@ jobs:
 
         # changes the base-tag in index.html from '/' to 'GitFocused' to match GitHub Pages repository subdirectory    
         - name: Change base-tag in index.html from / to GitFocused
-          run: sed 's/<base href="\/" \/>/<base href="\/GitFocused\/" \/>/g' release/wwwroot/index.html
+          run: sed -i 's/<base href="\/" \/>/<base href="\/GitFocused\/" \/>/g' release/wwwroot/index.html
           
         # copy index.html to 404.html to serve the same file when a file is not found
         - name: copy index.html to 404.html
@@ -41,7 +41,3 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             BRANCH: fh-pages
             FOLDER: release/wwwroot
-        
-        # change base tag in index.html from '/' to 'GitFocused' to match repository subdirectory
-        - name: Change base tag in index.html
-          run: sed -i 
