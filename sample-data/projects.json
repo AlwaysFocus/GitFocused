@@ -1,0 +1,32 @@
+[
+    {   
+        "name": "Micro Computer",
+        "number": 1,
+        "isDone": false
+    },
+    {
+        "name": "Shopping Website",
+        "number": 2,
+        "isDone": true
+    },
+    {
+        "name": "Dancing Robot",
+        "number": 3,
+        "isDone": false
+    },
+    {
+        "name": "Electric Car",
+        "number": 4,
+        "isDone": false
+    },
+    {
+        "name": "Self Portrait",
+        "number": 5,
+        "isDone": true
+    },
+    {
+        "name": "GenAI",
+        "number": 6,
+        "isDone": false
+    }
+]
