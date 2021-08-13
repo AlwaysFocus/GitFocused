@@ -1,0 +1,82 @@
+@page "/jsconsole"
+@inject IJSRuntime JS;
+
+<h1 class="text-primary">Calling Javascript from within C# code.</h1>
+
+<div class="form-group">
+  <label for="function-name" class="text-primary">Enter Function Name</label>
+  <input  @bind="userFunction" type="text" class="form-control" name="function-name" id="function-name" aria-describedby="help" placeholder=":?>./">
+  <small id="help" class="form-text text-muted">You can type in the name of a supported function to run it.</small>
+</div>
+<div class="form-group">
+  <label for="functionData" class="text-primary">Data to pass to function</label>
+  <input @bind="userData" type="text" class="form-control" name="functionData" id="functionData" aria-describedby="helpId" placeholder="functionData">
+  <small id="helpId" class="form-text text-muted">Enter data here to pass it to the function that you're running.</small>
+</div>
+
+<button type="button" class="btn btn-primary" >Run Function</button>
+
+<p class="mt-2" style="font-size:1.6em">
+    <span class="badge badge-success"></span>
+    @convertedText
+</p>
+
+
+<h1 class="text-primary">Set a cookie.</h1>
+<input @bind="cookieName" type="text" class="form-control" placeholder="Cookie Name">
+<input @bind="cookieValue" type="text" class="form-control" placeholder="Cookie Value">
+
+<input @bind="cookiePath" type="text" class="form-control" placeholder="Cookie Path">
+<input @bind="cookieDomain" type="text" class="form-control" placeholder="Cookie Domain">
+<input @bind="cookieUseSSL" type="text" class="form-control" placeholder="Cookie Requires SSL?">
+
+<button type="button" class="btn btn-primary" >Create Cookie!</button>
+
+
+
+@code
+{
+    private MarkupString convertedText = new MarkupString("Select the <b>Convert Array</b> button.");
+    private string userFunction;
+    private string userData;
+    private string cookieName;
+    private string cookieValue;
+    private string cookieExpiryDate;
+    private string cookiePath;
+    private string cookieDomain;
+    private string cookieUseSSL;
+
+    private IJSObjectReference _jsModule;
+
+    
+
+     @* protected override async Task OnInitializedAsync()
+    {
+         _jsModule = await JS.InvokeAsync<IJSObjectReference>("import", "./wwwroot/js/FocusScript.js");
+    } *@
+
+    @* private async Task SetUserCookie()
+    {
+        Console.WriteLine($"User function: {userFunction}");
+        Console.WriteLine($"User Data: {userData}");
+        //var data = await JS.InvokeAsync<string>($"setCookie", cookieName, cookieValue, cookiePath, cookieDomain, cookieUseSSL);
+
+        convertedText = new MarkupString(data);
+    } *@
+    private uint[] quoteArray = new uint[]
+    {
+        60, 101, 109, 62, 67, 97, 110, 39, 116, 32, 115, 116, 111, 112, 32,
+        116, 104, 101, 32, 115, 105, 103, 110, 97, 108, 44, 32, 77, 97,
+        108, 46, 60, 47, 101, 109, 62, 32, 45, 32, 77, 114, 46, 32, 85, 110,
+        105, 118, 101, 114, 115, 101, 10, 10,
+    };
+
+    @* private async Task RunUserFunction()
+    {
+        Console.WriteLine($"User function: {userFunction}");
+        Console.WriteLine($"User Data: {userData}");
+        var data = await JS.InvokeAsync<string>($"{userFunction}", userData);
+        var moreData = await _jsModule.InvokeAsync<string>($"{userFunction}", userData)
+        convertedText = new MarkupString(moreData);
+    } *@
+}
